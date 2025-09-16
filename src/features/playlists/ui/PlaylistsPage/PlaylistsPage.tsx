@@ -28,12 +28,15 @@ export const PlaylistsPage = () => {
 		setCurrentPage(1);
 	};
 
+	if (isLoading) return <h1>Skeleton loader...</h1>;
+
 	return (
 		<div className={s.container}>
 			<h1>Playlists page</h1>
 			<CreatePlaylistForm />
 			<input type="search" placeholder={'Search playlist by title'} onChange={searchPlaylistHandler} />
 			<PlaylistsList playlists={data?.data || []} isPlaylistsLoading={isLoading} />
+
 			<Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} pagesCount={data?.meta.pagesCount || 1} pageSize={pageSize} changePageSize={changePageSizeHandler} />
 		</div>
 	);

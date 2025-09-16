@@ -22,20 +22,7 @@ export const TracksPage = () => {
 		<div>
 			<h1>Tracks page</h1>
 			<TracksList tracks={pages} />
-			{/* Load more (не забыть вытащить из хука isLoading) */}
-			{/* {!isLoading && (
-					<>
-						{hasNextPage ? (
-							<button onClick={loadMoreHandler} disabled={isFetching}>
-								{isFetchingNextPage ? 'Loading...' : 'Load More'}
-							</button>
-						) : (
-							<p>Nothing more to load</p>
-						)}
-					</>
-				)} */}
 
-			{/* Infinity scroll */}
 			{hasNextPage && <LoadingTrigger isFetchingNextPage={isFetchingNextPage} observerRef={observerRef} />}
 
 			{!hasNextPage && pages.length > 0 && <p>Nothing more to load</p>}
