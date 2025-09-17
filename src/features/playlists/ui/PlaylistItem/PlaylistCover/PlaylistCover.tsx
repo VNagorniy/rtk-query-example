@@ -1,9 +1,10 @@
 import defaultCover from '@/assets/images/default-playlist-cover.png';
 import type { Images } from '@/common/types';
+
 import { useDeletePlaylistCoverMutation, useUploadPlaylistCoverMutation } from '@/features/playlists/api/playlistsApi';
 import type { ChangeEvent } from 'react';
 import s from './PlaylistCover.module.css';
-import { toast } from 'react-toastify';
+import { errorToast } from '@/common/utils';
 
 type Props = {
 	playlistId: string;
@@ -25,14 +26,11 @@ export const PlaylistCover = ({ images, playlistId }: Props) => {
 		if (!file) return;
 
 		if (!allowedTypes.includes(file.type)) {
-			toast('Only JPEG, PNG or GIF images are allowed', { type: 'error', theme: 'colored' });
+			errorToast('Only JPEG, PNG or GIF images are allowed');
 		}
 
 		if (file.size > maxSize) {
-			toast(`The file is too large (max. ${Math.round(maxSize / 1024)} KB)`, {
-				type: 'error',
-				theme: 'colored'
-			});
+			errorToast(`The file is too large (max. ${Math.round(maxSize / 1024)} KB)`);
 		}
 
 		uploadCover({ playlistId, file });

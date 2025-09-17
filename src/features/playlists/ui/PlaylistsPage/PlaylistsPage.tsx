@@ -18,6 +18,18 @@ export const PlaylistsPage = () => {
 		pageSize
 	});
 
+	// useEffect(() => {
+	// 	if (!error) return;
+	// 	if ('status' in error) {
+	// 		// FetchBaseQueryError
+	// 		const errMsg = 'error' in error ? error.error : (error.data as { error: string }).error;
+	// 		toast(errMsg, { type: 'error', theme: 'colored' });
+	// 	} else {
+	// 		// SerializedError
+	// 		toast(error.message || 'Some error occurred', { type: 'error', theme: 'colored' });
+	// 	}
+	// }, [error]);
+
 	const changePageSizeHandler = (size: number) => {
 		setPageSize(size);
 		setCurrentPage(1);
