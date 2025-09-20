@@ -2,7 +2,6 @@ import { Pagination } from '@/common/components/Pagination/Pagination';
 import { useDebounceValue } from '@/common/hooks';
 import { useState, type ChangeEvent } from 'react';
 import { useFetchPlaylistsQuery } from '../../api/playlistsApi';
-import { CreatePlaylistForm } from '../CreatePlaylistForm/CreatePlaylistForm';
 import { PlaylistsList } from '../PlaylistsList/PlaylistsList';
 import s from './PlaylistsPage.module.css';
 
@@ -17,18 +16,6 @@ export const PlaylistsPage = () => {
 		pageNumber: currentPage,
 		pageSize
 	});
-
-	// useEffect(() => {
-	// 	if (!error) return;
-	// 	if ('status' in error) {
-	// 		// FetchBaseQueryError
-	// 		const errMsg = 'error' in error ? error.error : (error.data as { error: string }).error;
-	// 		toast(errMsg, { type: 'error', theme: 'colored' });
-	// 	} else {
-	// 		// SerializedError
-	// 		toast(error.message || 'Some error occurred', { type: 'error', theme: 'colored' });
-	// 	}
-	// }, [error]);
 
 	const changePageSizeHandler = (size: number) => {
 		setPageSize(size);
@@ -45,7 +32,7 @@ export const PlaylistsPage = () => {
 	return (
 		<div className={s.container}>
 			<h1>Playlists page</h1>
-			<CreatePlaylistForm />
+
 			<input type="search" placeholder={'Search playlist by title'} onChange={searchPlaylistHandler} />
 			<PlaylistsList playlists={data?.data || []} isPlaylistsLoading={isLoading} />
 

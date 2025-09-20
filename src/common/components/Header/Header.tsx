@@ -1,5 +1,5 @@
 import { Path } from '@/common/routing';
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import s from './Header.module.css';
 import { useGetMeQuery, useLogoutMutation } from '@/features/auth/api/authApi';
 import { Login } from '@/features/auth/ui/Login/Login';
@@ -7,8 +7,7 @@ import { Login } from '@/features/auth/ui/Login/Login';
 const navItems = [
 	{ to: Path.Main, label: 'Main' },
 	{ to: Path.Playlists, label: 'Playlists' },
-	{ to: Path.Tracks, label: 'Tracks' },
-	{ to: Path.Profile, label: 'Profile' }
+	{ to: Path.Tracks, label: 'Tracks' }
 ];
 
 export const Header = () => {
@@ -32,7 +31,7 @@ export const Header = () => {
 			</nav>
 			{data && (
 				<div className={s.loginContainer}>
-					<p>{data.login}</p>
+					<Link to={Path.Profile}>{data.login}</Link>
 					<button onClick={logoutHandler}>logout</button>
 				</div>
 			)}
