@@ -1,17 +1,22 @@
 import { baseApi } from '@/app/api/baseApi';
-import type { CreatePlaylistArgs, FetchPlaylistsArgs, PlaylistData, PlaylistsResponse, UpdatePlaylistArgs } from './playlistsApi.types';
+import { imagesSchema } from '@/common/schemas';
 import type { Images } from '@/common/types';
+import { withZodCatch } from '@/common/utils';
+import { playlistCreateResponseSchema, playlistsResponseSchema } from '../model/playlists.schemas';
+import type { CreatePlaylistArgs, FetchPlaylistsArgs, UpdatePlaylistArgs } from './playlistsApi.types';
 
 export const playlistsApi = baseApi.injectEndpoints({
 	endpoints: (build) => ({
 		// `query` по умолчанию создает запрос `get` и указание метода необязательно
 		//типизация 1й аргумент - что возвращает запрос, 2й аргумент - тип аргумента
-		fetchPlaylists: build.query<PlaylistsResponse, FetchPlaylistsArgs>({
-			query: (params) => ({ url: `playlists`, params }),
+		fetchPlaylists: build.query({
+			query: (params: FetchPlaylistsArgs) => ({ url: `playlists`, params }),
+			...withZodCatch(playlistsResponseSchema),
 			providesTags: ['Playlist']
 		}),
-		createPlaylist: build.mutation<{ data: PlaylistData }, CreatePlaylistArgs>({
-			query: (body) => ({ method: 'post', url: 'playlists', body }),
+		createPlaylist: build.mutation({
+			query: (body: CreatePlaylistArgs) => ({ method: 'post', url: 'playlists', body }),
+			...withZodCatch(playlistCreateResponseSchema),
 			invalidatesTags: ['Playlist']
 		}),
 		deletePlaylist: build.mutation<void, string>({
@@ -77,6 +82,7 @@ export const playlistsApi = baseApi.injectEndpoints({
 					body: formData
 				};
 			},
+			...withZodCatch(imagesSchema),
 			invalidatesTags: ['Playlist']
 		}),
 		deletePlaylistCover: build.mutation<void, { playlistId: string }>({
